@@ -1,9 +1,9 @@
 # My game proposal:
 
-# Idea
+# Idea:
 
-# MVP user stories
+# MVP user stories:
 
-#Stretch Goals
+#Stretch Goals:
 
-#Ideation Area
+#Ideation Area:
