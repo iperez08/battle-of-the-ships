@@ -1,4 +1,4 @@
-# MVP user stories:
+<!-- # MVP user stories:
 I can start a game and see a link to send to my friend, so that we can play together.
 I can see my grid and squares that represent the boats that I will be defending on my screen.
 I can see a blank grid that represents my opponents screen so that I can shoot.
@@ -28,38 +28,68 @@ I can change the play conditions of my game, so that I can increase or decrease 
 Pseudocode:
 
 init() = {
-  gridOne = [100 blanks]
-  gridTwo = [100 blanks]
+  gridOne = [100 blanks or FALSE]
+  gridTwo = [100 blanks or FALSE]
   boatGridOne = createBoatGrid()
   boatGridTwo = createBoatGrid()
   win = false
   lose = false
   turn = playerOne
   **stretch goal**
-  tie = false
+  tie = TRUE
   winMode = all or one
   time = 0
-  turnTimeLimit = false or true and specific time
-  GameTimeLimit = false or true and specific time
-  render()
+  turnTimeLimit = TRUE and default time or FALSE
+  GameTimeLimit = TRUE and default time or FALSE
+  turnLimit = TRUE and default turns or FALSE
+  **stretch goal**
+  render() 
 }
 
 render() {
-  updateBoatGrids()
+  updateGrids()
   updateMessages()
 }
 
-updateBoatGrid() {
-  
+updateGrids() {
+  loops through the gridOne and gridTwo arrays and uses DOM to update 
+  the grid that players see on the browser
 }
 updateMessages() {
-
+  tells the players whose turn it is, if anyone has won, if time has run out, or if turns have run out
 }
 
-handleClick() {
-  shootAtOpponent()
-  checkHitMiss()
-  checkWinner()
-  switchPlayer()
-  render()
+createBoatGrid() {
+  a grid with specific number of boats with specific sizes in random locations
+    place boats at random locations in order from largest to smallest
+      must check if the items are blank or not in the arrays within the array
 }
+
+handleClick() { 
+  shootAtOpponent() 
+  checkHitMiss() 
+  checkWinner() 
+  switchPlayer() 
+  render() 
+}
+
+shootAtOpponent() {
+  place a true or false at some specific item in gridOne[i][j] or gridTwo[i][j]
+}
+checkHitMiss() 
+  IF hit
+    THEN prompt [turn] to click another square and [turn] stays the same
+  ELSE miss()
+checkWinner() 
+  IF gridOne = boatGridTwo
+    THEN winner = true
+  return [turn]
+switchPlayer() 
+  IF winner = true
+    THEN return
+  ELSE IF turn = playerOne
+    THEN turn = playerTwo
+  ELSE turn = playerOne
+-->
+
+how do i keep track of my the arrays when they have two different users?
