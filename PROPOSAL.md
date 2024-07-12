@@ -2,7 +2,7 @@
 # Battle of the Ships
 
 ## Project Description
-My game is called Battle of the Ships. This is a two-player game. The objective is to sink your opponent's ships before they shink yours. While there are instructions on how to play the game, the intention is to make the game as visually intuitive as possible, so that the interface is clean, clear, and efficient.
+My game is called Battle of the Ships. This is a two-player game. The objective is to sink your opponent's ships before they sink yours. While there are instructions on how to play the game, the intention is to make the game as visually intuitive as possible, so that the interface is clean, clear, and efficient.
 
 ## Wireframe
 Initial Landing View
@@ -12,7 +12,7 @@ Initial Landing View
 
 Results View
 
-![Battleship board at end]()
+![Battleship board at end](./BS-end.png)
 
 ## MVP User stories:
 - As a user, I can start a game, so that I can read the rules before I start.
