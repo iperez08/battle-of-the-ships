@@ -7,7 +7,7 @@ My game is called Battle of the Ships. This is a two-player game. The objective 
 ## Wireframe
 Initial Landing View
 
-![Battleship board at start](./BS-start.png)
+![Battleship board at start](./BS-start-1.png)
 
 
 Results View
