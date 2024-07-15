@@ -7,35 +7,11 @@ let win
 let lose
 
 const init = () => {
-    let turn = 'platerOne'
+    let turn = 'playerOne'
     let win = false
     let lose = false
     boatGridOne = createBoatGrid()
     boatGridTwo = createBoatGrid()
-    playGridOne = [
-        ['','','','','','','','','',''],
-        ['','','','','','','','','',''],
-        ['','','','','','','','','',''],
-        ['','','','','','','','','',''],
-        ['','','','','','','','','',''],
-        ['','','','','','','','','',''],
-        ['','','','','','','','','',''],
-        ['','','','','','','','','',''],
-        ['','','','','','','','','',''],
-        ['','','','','','','','','',''],
-    ]
-    playGridTwo = [
-        ['','','','','','','','','',''],
-        ['','','','','','','','','',''],
-        ['','','','','','','','','',''],
-        ['','','','','','','','','',''],
-        ['','','','','','','','','',''],
-        ['','','','','','','','','',''],
-        ['','','','','','','','','',''],
-        ['','','','','','','','','',''],
-        ['','','','','','','','','',''],
-        ['','','','','','','','','',''],
-    ]
 }
 
 const createBoatGrid = () => {
@@ -119,3 +95,72 @@ const placeHorizontalBoat = (boatLoc, array, blength) => {
         boatLoc[array[0]].splice(array[1] + i, 1, true)
     }
 } 
+
+
+
+
+
+
+
+
+
+
+
+const boardOneEl = document.querySelector('#boardOne')
+const boardTwoEl = document.querySelector('#boardTwo')
+
+
+// something is wrong with the row and col refences
+const handleShot = (event) => {
+    let boatsInPlay = whichPlayerData()
+    let row = event.target.parentElement.id
+    let col = event.target.id
+    let emoji = event.target.innerText
+    if (row === '' ||
+        win === true ||
+        boatsInPlay[row][col] === '5')
+        return
+    checkHitMiss(boatsInPlay, row, col)
+    checkWinner()
+    switchPlayer()
+}
+
+const whichPlayerData = () => {
+    if (turn === 'playerOne') {
+        return boatGridOne
+    } else return boatGridTwo
+}
+
+const checkHitMiss = (barco, r, c) => {
+    if ( barco[r][c] === true) {
+        emoji = '⛵️'
+         barco[r][c] = '10'
+    } else {
+        emoji = '🎯'
+         barco[r][c] = '5'
+    } 
+}
+
+const checkWinner = () => {
+    let tally = 0
+    for (let i = 0; i < boatsInPlay.length; i++) {
+        for (let j = 0; j < boatsInPlay.length; i++) {
+            if (boatsInPlay[row][col] === '10')
+                tally += 1
+        }
+    }
+    if (tally === 11)   
+        win = true
+}
+
+const switchPlayer = () => {
+    switch (turn) {
+        case 'playerOne':
+            turn = 'playerTwo'
+        case 'playerTwo':
+            turn = 'playerOne'
+    }
+}
+
+boardOneEl.addEventListener('click',handleShot)
+boardTwoEl.addEventListener('click',handleShot)
