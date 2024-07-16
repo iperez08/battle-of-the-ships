@@ -7,12 +7,12 @@ My game is called Battle of the Ships. This is a two-player game. The objective 
 ## Wireframe
 Initial Landing View
 
-![Battleship board at start](./BS-start-1.png)
+![Battleship board at start](./animate/BS-start-1.png)
 
 
 Results View
 
-![Battleship board at end](./BS-end.png)
+![Battleship board at end](./animate/BS-end.png)
 
 ## MVP User stories:
 - As a user, I can start a game, so that I can read the rules before I start.
