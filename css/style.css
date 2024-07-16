@@ -63,4 +63,8 @@ nav, section {
 .column {
     border: solid 1px;
     width: 40px;
+    display: flex;
+    justify-content: center;
+    align-content:space-around;
+    font-size: 200%;
 }

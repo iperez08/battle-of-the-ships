@@ -1,17 +1,21 @@
-let playGridOne
-let playGridTwo
 let boatGridOne
 let boatGridTwo
+let boatsInPlay
 let turn
 let win
 let lose
+let tallyOne
+let tallyTwo
 
 const init = () => {
-    let turn = 'playerOne'
-    let win = false
-    let lose = false
+    turn = 'playerTwo'
+    win = false
+    lose = false
+    tallyOne = 0
+    tallyTwo = 0
     boatGridOne = createBoatGrid()
     boatGridTwo = createBoatGrid()
+    switchPlayer()
 }
 
 const createBoatGrid = () => {
@@ -36,7 +40,7 @@ const createBoatGrid = () => {
 const placeBoat = (arr, boatSize) => {
     let dir = orientBoat()
     let firstPoint = placeFirstBoatItem(dir, boatSize)
-    let keepGoing = okayToPlace(arr, dir, firstPoint)
+    let keepGoing = okayToPlace(arr, dir, boatSize, firstPoint)
     if (keepGoing === true && dir === "horizontal") {
         placeHorizontalBoat(arr, firstPoint, boatSize)
     } else if(keepGoing === true && dir === 'vertical') {
@@ -62,26 +66,31 @@ const placeFirstBoatItem = (direction,leng) => {
     if (direction === "horizontal") {
         let row = randomInt(10)
         let col = randomInt(10 - leng)
+        console.log([row,col])
         return [row,col]
     } else {
         let row = randomInt(10 - leng)
         let col = randomInt(10)
+        console.log([row,col])
         return [row,col]
     }
 }
 
-const okayToPlace = (bLocals, orient, point) => {
+const okayToPlace = (bLocals, orient, bSize, point) => {
     if (orient === 'horizontal') {
-        for (let i = 0; i < point.length; i++) {
-            if (bLocals[point[0]][point[1] + i] !== false) return false
-            else return true
+        for (let i = 0; i < (bSize); i++) {
+            if (bLocals[point[0]][point[1] + i] !== false) {
+                return false
+            }
         }
-    } else {
-        for (let i = 0; i < point.length; i++) {
-            if (bLocals[point[0] + i][point[1]] !== false) return false
-            else return true
+    } else if (orient === 'vertical') {
+        for (let i = 0; i < (bSize); i++) {
+            if (bLocals[point[0] + i][point[1]] !== false) {
+                return false
+            }
         }
     }
+    return true
 }
 
 const placeVerticalBoat = (boatLocals, cordPoints, boatLen) => {
@@ -96,71 +105,119 @@ const placeHorizontalBoat = (boatLoc, array, blength) => {
     }
 } 
 
+const boardOne = document.querySelector('#boardOne')
+const boardOneEls = boardOne.querySelectorAll('div.row > div')
+const boardTwo = document.querySelector('#boardTwo')
+const boardTwoEls = boardTwo.querySelectorAll('div.row > div')
+const message = document.querySelector('section')
 
-
-
-
-
-
-
-
-
-
-const boardOneEl = document.querySelector('#boardOne')
-const boardTwoEl = document.querySelector('#boardTwo')
-
-
-// something is wrong with the row and col refences
 const handleShot = (event) => {
-    let boatsInPlay = whichPlayerData()
+    boatsInPlay = getOpponentData()
     let row = event.target.parentElement.id
     let col = event.target.id
-    let emoji = event.target.innerText
-    if (row === '' ||
-        win === true ||
-        boatsInPlay[row][col] === '5')
+    // already sort of preventing col === '' with {once: true}
+    if (win === true ||
+        col === '' ||
+        boatsInPlay[row][col] > 1) {
         return
-    checkHitMiss(boatsInPlay, row, col)
-    checkWinner()
-    switchPlayer()
+    }
+    let theShotHit = checkIfHit(event, row, col)
+    checkForWinner()
+    getNextShot(theShotHit)
 }
 
-const whichPlayerData = () => {
+const getOpponentData = () => {
     if (turn === 'playerOne') {
-        return boatGridOne
-    } else return boatGridTwo
-}
-
-const checkHitMiss = (barco, r, c) => {
-    if ( barco[r][c] === true) {
-        emoji = '⛵️'
-         barco[r][c] = '10'
+        return boatGridTwo
     } else {
-        emoji = '🎯'
-         barco[r][c] = '5'
-    } 
+        return boatGridOne
+    }
+}   
+
+const checkIfHit = (event, r, c) => {
+    if (boatsInPlay[r][c] === true) {
+        event.target.innerText = '⛵️'
+        boatsInPlay[r][c] = '10'
+        return true
+    } else {
+        event.target.innerText = '🎯'
+        boatsInPlay[r][c] = '5'
+        return false
+    }
 }
 
-const checkWinner = () => {
-    let tally = 0
+const checkForWinner = () => {
     for (let i = 0; i < boatsInPlay.length; i++) {
-        for (let j = 0; j < boatsInPlay.length; i++) {
-            if (boatsInPlay[row][col] === '10')
-                tally += 1
+        for (let j = 0; j < boatsInPlay.length; j++) {
+            if (boatsInPlay[i][j] === '10' && turn === 'playerOne') {
+                tallyOne += 1
+            }
+            if (boatsInPlay[i][j] === '10' && turn === 'platerTwo') {
+                tallyTwo += 1
+            } 
         }
     }
-    if (tally === 11)   
+    if (tallyOne === 78) {
         win = true
+        boardTwo.removeEventListener('click', handleShot, {once: true})
+    }
+    if (tallyTwo === 78) {
+        win = true
+        boardOne.removeEventListener('click', handleShot, {once: true})
+    }
+    messageToPlayers(`${turn} wins!`)
+}
+
+const getNextShot = (hit) => {
+    if (hit === true) {
+        continueShooting()
+    } else switchPlayer()
+}
+
+const continueShooting = () => {
+    if (turn === 'playerOne') {
+        playerOneShoots()
+    } else {
+        playerTwoShoots()
+    }
 }
 
 const switchPlayer = () => {
     switch (turn) {
         case 'playerOne':
             turn = 'playerTwo'
+            switchBoardInPlay()
+            break
         case 'playerTwo':
             turn = 'playerOne'
+            switchBoardInPlay()
+            break
     }
 }
 
-boardOneEl.addEventListener('click',handleShot)
-boardTwoEl.addEventListener('click',handleShot)
+const switchBoardInPlay = () => {
+    if (turn === 'playerOne') {
+        playerOneShoots()
+    } else {
+        playerTwoShoots()
+    }
+}
+
+const playerOneShoots = () => {
+    boardOne.removeEventListener('click',handleShot, {once: true})
+    boardTwo.addEventListener('click', handleShot, {once: true})
+    messageToPlayers(`${turn}\'s turn.`)
+}
+
+const playerTwoShoots = () => {
+    boardOne.addEventListener('click', handleShot, {once: true})
+    boardTwo.removeEventListener('click',handleShot, {once: true})
+    messageToPlayers(`${turn}\'s turn.`)
+}
+
+const messageToPlayers = (string) => {
+    message.innerText = string
+}
+
+boardOne.addEventListener('click',handleShot,{once: true})
+boardTwo.addEventListener('click',handleShot,{once: true})
