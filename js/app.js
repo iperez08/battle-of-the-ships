@@ -159,7 +159,7 @@ const checkIfHit = (event, r, c) => {
         boatsInPlay[r][c] = '10'
         return true
     } else {
-        event.target.innerText = '🎯'
+        event.target.innerText = '❌'
         boatsInPlay[r][c] = '5'
         return false
     }

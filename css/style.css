@@ -48,11 +48,13 @@ nav, section {
 #arenaOne {
     grid-column: 1 / 3;
     justify-content: left;
+    align-items: center;
 }
 
 #arenaTwo {
     grid-column: 3 / 5;
     justify-content: right;
+    align-items: center;
 }
 
 .row {
@@ -69,11 +71,48 @@ nav, section {
     font-size: 200%;
 }
 
-.column:hover {
-    border-color: green;
+.column:empty:hover {
+    background-image: url(../animate/radar.png);
+    background-size: 150%;
+    background-position: 45%;
 }
+
 
 button {
     width: 100px;
     height: 36px;
+}
+
+menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 400px;
+}
+
+menu > div {
+    display: flex;
+    height: 100px;
+    width: 200px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gridcount {
+    display: flex;
+    justify-content: left;
+    width: 85%;
+}
+
+div.gridcount > div {
+    border: solid 1px;
+    height: 25px;
+    width: 25px;
+}
+
+img {
+    width: 95%;
+    height: 75%;
+    object-fit: cover;
 }
