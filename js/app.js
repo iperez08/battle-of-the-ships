@@ -157,11 +157,11 @@ const checkForWinner = () => {
             } 
         }
     }
-    if (tallyOne === 78) {
+    if (tallyOne === 12) {
         win = true
         boardTwo.removeEventListener('click', handleShot, {once: true})
     }
-    if (tallyTwo === 78) {
+    if (tallyTwo === 12) {
         win = true
         boardOne.removeEventListener('click', handleShot, {once: true})
     }
