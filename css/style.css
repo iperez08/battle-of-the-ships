@@ -7,16 +7,16 @@
 body {
     height: 100dvh;
     display: grid;
-    grid-template-rows: 0.5fr 0.5fr 2fr 0.5fr 0.5fr;
+    grid-template-rows: 0.5fr auto 2fr 0.25fr;
     grid-template-columns: 1fr 2fr 2fr 1fr;
     font-family: system-ui, sans-serif;
 }
 
 h1, footer {
     display: flex;
-    background-color: violet;
     grid-column: span 4;
     justify-content: center;
+    align-items: center;
 }
 
 nav, section {
@@ -67,4 +67,13 @@ nav, section {
     justify-content: center;
     align-content:space-around;
     font-size: 200%;
+}
+
+.column:hover {
+    border-color: green;
+}
+
+button {
+    width: 100px;
+    height: 36px;
 }

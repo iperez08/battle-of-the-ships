@@ -7,6 +7,25 @@ let lose
 let tallyOne
 let tallyTwo
 
+
+const gameStatus = (event) => {
+    let id = event.target.id
+    switch (id) {
+        case 'settings':
+            break
+            // eventually put a function to change settings
+        case 'new':
+            init()
+            break
+        case 'pause':
+            break
+            // eventually put a function to change settings
+        case 'quit':
+            break
+            // eventually put a function to change settings
+    }
+}
+
 const init = () => {
     turn = 'playerTwo'
     win = false
@@ -108,6 +127,8 @@ const boardOneEls = boardOne.querySelectorAll('div.row > div')
 const boardTwo = document.querySelector('#boardTwo')
 const boardTwoEls = boardTwo.querySelectorAll('div.row > div')
 const message = document.querySelector('section')
+const games = document.querySelector('#action-buttons')
+const gameStatusActions = games.querySelectorAll('button')
 
 const handleShot = (event) => {
     boatsInPlay = getOpponentData()
@@ -145,8 +166,8 @@ const checkIfHit = (event, r, c) => {
 }
 
 const checkForWinner = () => {
-    let tallyOne = 0
-    let tallyTwo = 0
+    tallyOne = 0
+    tallyTwo = 0
     for (let i = 0; i < boatsInPlay.length; i++) {
         for (let j = 0; j < boatsInPlay.length; j++) {
             if (boatsInPlay[i][j] === '10' && turn === 'playerOne') {
@@ -165,6 +186,7 @@ const checkForWinner = () => {
         win = true
         boardOne.removeEventListener('click', handleShot, {once: true})
     }
+    console.log(tallyOne,tallyTwo)
     messageToPlayers(`${turn} wins!`)
 }
 
@@ -221,3 +243,4 @@ const messageToPlayers = (string) => {
 
 boardOne.addEventListener('click',handleShot,{once: true})
 boardTwo.addEventListener('click',handleShot,{once: true})
+games.addEventListener('click',init)
