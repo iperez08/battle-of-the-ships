@@ -11,8 +11,6 @@ const init = () => {
     turn = 'playerTwo'
     win = false
     lose = false
-    tallyOne = 0
-    tallyTwo = 0
     boatGridOne = createBoatGrid()
     boatGridTwo = createBoatGrid()
     switchPlayer()
@@ -147,6 +145,8 @@ const checkIfHit = (event, r, c) => {
 }
 
 const checkForWinner = () => {
+    let tallyOne = 0
+    let tallyTwo = 0
     for (let i = 0; i < boatsInPlay.length; i++) {
         for (let j = 0; j < boatsInPlay.length; j++) {
             if (boatsInPlay[i][j] === '10' && turn === 'playerOne') {
