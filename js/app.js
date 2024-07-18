@@ -7,7 +7,6 @@ let lose
 let tallyOne
 let tallyTwo
 
-
 const gameStatus = (event) => {
     let id = event.target.id
     switch (id) {
@@ -188,12 +187,13 @@ const checkForWinner = () => {
     if (tallyOne === 12) {
         win = true
         boardTwo.removeEventListener('click', handleShot, {once: true})
+        messageToPlayers(`${turn} wins!`)
     }
     if (tallyTwo === 12) {
         win = true
         boardOne.removeEventListener('click', handleShot, {once: true})
+        messageToPlayers(`${turn} wins!`)
     }
-    messageToPlayers(`${turn} wins!`)
 }
 
 const getNextShot = (hit) => {
@@ -257,7 +257,6 @@ const disableBoard = () => {
 
     }
 }
-
 
 const messageToPlayers = (string) => {
     message.innerText = string
