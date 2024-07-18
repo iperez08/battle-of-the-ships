@@ -1,5 +1,7 @@
 let boatGridOne
 let boatGridTwo
+let winStateForOne
+let winStateForTwo
 let boatsInPlay
 let turn
 let win
