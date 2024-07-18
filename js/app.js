@@ -14,13 +14,13 @@ const gameStatus = (event) => {
         case 'settings':
             break
             // eventually put a function to change settings
+        case 'quit':
+            break
+            // eventually put a function to change settings
         case 'new':
             init()
             break
         case 'pause':
-            break
-            // eventually put a function to change settings
-        case 'quit':
             break
             // eventually put a function to change settings
     }
@@ -32,7 +32,17 @@ const init = () => {
     lose = false
     boatGridOne = createBoatGrid()
     boatGridTwo = createBoatGrid()
+    clearTheBoard()
     switchPlayer()
+}
+
+const clearTheBoard = () => {
+    boardOneEls.forEach((el) => {
+        el.innerText = ''
+    }) 
+    boardTwoEls.forEach((el) => {
+        el.innerText = ''
+    })
 }
 
 const createBoatGrid = () => {
@@ -83,12 +93,10 @@ const placeFirstBoatItem = (direction,leng) => {
     if (direction === "horizontal") {
         let row = randomInt(10)
         let col = randomInt(10 - leng)
-        console.log([row,col])
         return [row,col]
     } else {
         let row = randomInt(10 - leng)
         let col = randomInt(10)
-        console.log([row,col])
         return [row,col]
     }
 }
@@ -134,7 +142,6 @@ const handleShot = (event) => {
     boatsInPlay = getOpponentData()
     let row = event.target.parentElement.id
     let col = event.target.id
-    // already sort of preventing col === '' with {once: true}
     if (win === true ||
         col === '' ||
         boatsInPlay[row][col] > 1) {
@@ -186,7 +193,6 @@ const checkForWinner = () => {
         win = true
         boardOne.removeEventListener('click', handleShot, {once: true})
     }
-    console.log(tallyOne,tallyTwo)
     messageToPlayers(`${turn} wins!`)
 }
 
@@ -228,14 +234,30 @@ const switchBoardInPlay = () => {
 const playerOneShoots = () => {
     boardOne.removeEventListener('click',handleShot, {once: true})
     boardTwo.addEventListener('click', handleShot, {once: true})
+    setTimeout(disableBoard,2000)
     messageToPlayers(`${turn}\'s turn.`)
 }
 
 const playerTwoShoots = () => {
     boardOne.addEventListener('click', handleShot, {once: true})
     boardTwo.removeEventListener('click',handleShot, {once: true})
+    setTimeout(disableBoard,2000)
     messageToPlayers(`${turn}\'s turn.`)
 }
+
+const disableBoard = () => {
+    if (turn === 'playerOne') {
+        boardOne.classList.add('notInPlay')
+        boardTwo.classList.remove('notInPlay')
+        console.log('this happened.')
+    } else {
+        boardOne.classList.remove('notInPlay')
+        boardTwo.classList.add('notInPlay')
+        console.log('this happened, too.')
+
+    }
+}
+
 
 const messageToPlayers = (string) => {
     message.innerText = string
