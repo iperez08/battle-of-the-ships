@@ -11,20 +11,43 @@ let winTally
 
 const gameStatus = (event) => {
     let id = event.target.id
+    let elem = document.getElementById(`${id}`)
     switch (id) {
         case 'settings':
             break
             // eventually put a function to change settings
         case 'quit':
             break
-            // eventually put a function to change settings
         case 'new':
             init()
             break
+        case 'resume':
         case 'pause':
+            pauseGame(elem, id)
             break
             // eventually put a function to change settings
     }
+}
+
+const pauseGame = (elem, id) => {
+    if (!turn) return
+    pauseBoards(elem)
+    if (id === "resume") resumeGame(elem)
+}
+
+const pauseBoards = (elem) => {
+    let activeBoard = turn === 'playerOne'? boardTwo : boardOne
+    activeBoard.classList.add('notInPlay')
+    elem.id = 'resume'
+    elem.innerText = 'Resume Game'
+    messageToPlayers(`${turn}'s turn. Resume game when you're ready.`)
+}
+
+const resumeGame = (elem) => {
+        let activeBoard = turn === 'playerOne'? boardTwo : boardOne
+        activeBoard.classList.remove('notInPlay')
+        elem.id = 'pause'
+        messageToPlayers(`${turn}'s turn.`)
 }
 
 const init = () => {
@@ -308,11 +331,7 @@ const switchPlayer = () => {
 }
 
 const switchBoardInPlay = () => {
-    if (turn === 'playerOne') {
-        playerOneShoots()
-    } else {
-        playerTwoShoots()
-    }
+    turn === 'playerOne'? playerOneShoots() : playerTwoShoots()
 }
 
 const playerOneShoots = () => {
@@ -329,7 +348,7 @@ const playerTwoShoots = () => {
     messageToPlayers(`${turn}\'s turn.`)
 }
 
-const disableBoard = () => {
+const disableBoard = (id) => {
     if (turn === 'playerOne') {
         boardOne.classList.add('notInPlay')
         boardTwo.classList.remove('notInPlay')
@@ -345,4 +364,4 @@ const messageToPlayers = (string) => {
 
 boardOne.addEventListener('click',handleShot,{once: true})
 boardTwo.addEventListener('click',handleShot,{once: true})
-games.addEventListener('click',init)
+games.addEventListener('click',gameStatus)
