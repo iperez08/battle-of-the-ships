@@ -121,3 +121,7 @@ img {
 .notInPlay {
     opacity: 0.01;
 }
+
+.sunk {
+    background-color: black;
+}
