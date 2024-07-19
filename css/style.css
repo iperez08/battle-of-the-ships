@@ -7,12 +7,12 @@
 body {
     height: 100dvh;
     display: grid;
-    grid-template-rows: 0.5fr auto 2fr 0.25fr;
+    grid-template-rows: 0.25fr auto 0.5fr 2.5fr;
     grid-template-columns: 1fr 2fr 2fr 1fr;
     font-family: system-ui, sans-serif;
 }
 
-h1, footer {
+h1 {
     display: flex;
     grid-column: span 4;
     justify-content: center;
@@ -20,16 +20,18 @@ h1, footer {
 }
 
 nav, section {
-    background-color: cadetblue;
     display: flex;
     justify-content: center;
     grid-column: span 4;
+}
 
+section {
+    align-items: end;
 }
 
 .arena {
     display: flex;
-    content-visibility: visible;
+    background-color: aqua;
 }
 
 .boat_tracker {
@@ -120,4 +122,8 @@ img {
 
 .notInPlay {
     opacity: 0.01;
+}
+
+.sunk {
+    background-color: black;
 }

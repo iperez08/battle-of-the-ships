@@ -1,37 +1,73 @@
 let boatGridOne
 let boatGridTwo
+let winStatusForOne
+let winStatusForTwo
 let boatsInPlay
 let turn
+let waiting
 let win
 let lose
-let tallyOne
-let tallyTwo
+let winTally
 
 const gameStatus = (event) => {
     let id = event.target.id
+    let elem = document.getElementById(`${id}`)
     switch (id) {
         case 'settings':
             break
             // eventually put a function to change settings
         case 'quit':
             break
-            // eventually put a function to change settings
         case 'new':
             init()
             break
+        case 'resume':
         case 'pause':
+            pauseGame(elem, id)
             break
             // eventually put a function to change settings
     }
+}
+
+const pauseGame = (elem, id) => {
+    if (!turn) return
+    pauseBoards(elem)
+    if (id === "resume") resumeGame(elem)
+}
+
+const pauseBoards = (elem) => {
+    let activeBoard = turn === 'playerOne'? boardTwo : boardOne
+    activeBoard.classList.add('notInPlay')
+    elem.id = 'resume'
+    elem.innerText = 'Resume Game'
+    messageToPlayers(`${turn}'s turn. Resume game when you're ready.`)
+}
+
+const resumeGame = (elem) => {
+        let activeBoard = turn === 'playerOne'? boardTwo : boardOne
+        activeBoard.classList.remove('notInPlay')
+        elem.id = 'pause'
+        messageToPlayers(`${turn}'s turn.`)
 }
 
 const init = () => {
     turn = 'playerTwo'
     win = false
     lose = false
-    boatGridOne = createBoatGrid()
-    boatGridTwo = createBoatGrid()
+    boatGridOne = createBoatGrid(5)
+    boatGridTwo = createBoatGrid(5)
+    winStatusForOne = {
+        '3': 0,
+        '4': 0,
+        '5': 0
+    }
+    winStatusForTwo = {
+        '3': 0,
+        '4': 0,
+        '5': 0
+    }
     clearTheBoard()
+    clearTheTrackers()
     switchPlayer()
 }
 
@@ -44,8 +80,21 @@ const clearTheBoard = () => {
     })
 }
 
-const createBoatGrid = () => {
-    let boats = [
+const clearTheTrackers = () => {
+    boatCellsOne.forEach((el) => {
+        if (el.classList.contains('sunk')) {
+            el.classList.remove('sunk')
+        }
+    boatCellsTwo.forEach((el) => {
+        if (el.classList.contains('sunk')) {
+            el.classList.remove('sunk')
+        }
+    })
+    })
+}
+
+const createBoatGrid = (size) => {
+    let openWater = [
         [false, false, false, false, false, false, false, false, false, false],
         [false, false, false, false, false, false, false, false, false, false],
         [false, false, false, false, false, false, false, false, false, false],
@@ -57,22 +106,23 @@ const createBoatGrid = () => {
         [false, false, false, false, false, false, false, false, false, false],
         [false, false, false, false, false, false, false, false, false, false]
     ]
-    let array1 = placeBoat(boats, 5)
-    let array2 = placeBoat(array1, 4)
-    let allBoatsPlaced = placeBoat(array2, 3)
-    return allBoatsPlaced
+    let allBoatsArray = placeBoat(openWater, size)
+    return allBoatsArray
 }
 
 const placeBoat = (arr, boatSize) => {
+    if (boatSize < 3) return arr
     let dir = orientBoat()
     let firstPoint = placeFirstBoatItem(dir, boatSize)
     let keepGoing = okayToPlace(arr, dir, boatSize, firstPoint)
     if (keepGoing === true && dir === "horizontal") {
         placeHorizontalBoat(arr, firstPoint, boatSize)
+        return placeBoat(arr, boatSize - 1)
     } else if(keepGoing === true && dir === 'vertical') {
         placeVerticalBoat(arr, firstPoint, boatSize)
-    } else placeBoat(arr, boatSize)
-    return arr
+        return placeBoat(arr, boatSize - 1)
+    } else
+        return placeBoat(arr,boatSize)
 }
 
 const randomInt = (highestValue) => {
@@ -119,13 +169,13 @@ const okayToPlace = (bLocals, orient, bSize, point) => {
 
 const placeVerticalBoat = (boatLocals, cordPoints, boatLen) => {
     for (let i = 0; i < boatLen; i++) {
-        boatLocals[cordPoints[0] + i].splice(cordPoints[1], 1, true)
+        boatLocals[cordPoints[0] + i].splice(cordPoints[1], 1, boatLen)
     }
 }
 
-const placeHorizontalBoat = (boatLoc, array, blength) => {
-    for (let i = 0; i < blength; i++) {
-        boatLoc[array[0]].splice(array[1] + i, 1, true)
+const placeHorizontalBoat = (boatLoc, array, bLength) => {
+    for (let i = 0; i < bLength; i++) {
+        boatLoc[array[0]].splice(array[1] + i, 1, bLength)
     }
 } 
 
@@ -136,6 +186,11 @@ const boardTwoEls = boardTwo.querySelectorAll('div.row > div')
 const message = document.querySelector('section')
 const games = document.querySelector('#action-buttons')
 const gameStatusActions = games.querySelectorAll('button')
+const boatTrackerOne = document.querySelector('#trackerOne')
+const boatCellsOne = boatTrackerOne.querySelectorAll('.boatCell')
+const boatTrackerTwo = document.querySelector('#trackerTwo')
+const boatCellsTwo = boatTrackerTwo.querySelectorAll('.boatCell')
+
 
 const handleShot = (event) => {
     boatsInPlay = getOpponentData()
@@ -143,12 +198,18 @@ const handleShot = (event) => {
     let col = event.target.id
     if (win === true ||
         col === '' ||
-        boatsInPlay[row][col] > 1) {
+        boatsInPlay[row][col] > 5) {
         return
     }
     let theShotHit = checkIfHit(event, row, col)
-    checkForWinner()
-    getNextShot(theShotHit)
+    if (theShotHit === true) {
+        updateWinStatus(boatType)
+        updateBoatTracker()
+        let newWinner = checkForWinner()
+        if (newWinner !== true) {
+            continueShooting()
+        } else return
+    } else switchPlayer()
 }
 
 const getOpponentData = () => {
@@ -160,46 +221,92 @@ const getOpponentData = () => {
 }   
 
 const checkIfHit = (event, r, c) => {
-    if (boatsInPlay[r][c] === true) {
+    if (boatsInPlay[r][c] >= 3 &&
+        boatsInPlay[r][c] <= 5) {
         event.target.innerText = '⛵️'
-        boatsInPlay[r][c] = '10'
+        boatType = boatsInPlay[r][c]
+        boatsInPlay[r][c] *= 2
         return true
     } else {
         event.target.innerText = '❌'
-        boatsInPlay[r][c] = '5'
+        boatsInPlay[r][c] = 11
         return false
     }
 }
 
-const checkForWinner = () => {
-    tallyOne = 0
-    tallyTwo = 0
-    for (let i = 0; i < boatsInPlay.length; i++) {
-        for (let j = 0; j < boatsInPlay.length; j++) {
-            if (boatsInPlay[i][j] === '10' && turn === 'playerOne') {
-                tallyOne += 1
+const updateWinStatus = (boatType) => {
+    if (turn === 'playerOne') {
+        Object.entries(winStatusForOne).forEach((pair) => {
+            if((boatType + '') === pair[0]) {
+                winStatusForOne[pair[0]] += 1
             }
-            if (boatsInPlay[i][j] === '10' && turn === 'platerTwo') {
-                tallyTwo += 1
-            } 
-        }
-    }
-    if (tallyOne === 12) {
-        win = true
-        boardTwo.removeEventListener('click', handleShot, {once: true})
-        messageToPlayers(`${turn} wins!`)
-    }
-    if (tallyTwo === 12) {
-        win = true
-        boardOne.removeEventListener('click', handleShot, {once: true})
-        messageToPlayers(`${turn} wins!`)
+        })
+    } else {
+        Object.entries(winStatusForTwo).forEach((pair) => {
+            if((boatType + '') === pair[0]) {
+                winStatusForTwo[pair[0]] += 1
+            }
+        })
     }
 }
 
-const getNextShot = (hit) => {
-    if (hit === true) {
-        continueShooting()
-    } else switchPlayer()
+const updateBoatTracker = () => {
+    if (turn === 'playerOne') {
+        Object.entries(winStatusForOne).forEach(([key, value]) => {
+            if (key === (value + '')) {
+                boatCellsTwo.forEach((el) => {
+                    if (el.id === (value + '')) {
+                        console.log(el)
+                        el.classList.add('sunk')
+                        console.log(el)
+                    }
+                })
+            }
+        })
+    } else {
+        Object.entries(winStatusForTwo).forEach(([key, value]) => {
+            if (key === (value + '')) {
+                boatCellsOne.forEach((el) => {
+                    if (el.id === (value + '')) {
+                        console.log(el)
+                        el.classList.add('sunk')
+                        console.log(el)
+                    }
+                })
+            }
+        })
+    }
+}
+
+const checkForWinner = () => {
+    winTally = 0
+    if (turn === 'playerOne') {
+        Object.entries(winStatusForOne).forEach(([key, value]) => {
+            if (key === (value + '')) {
+                winTally +=1
+            }
+        })
+    } else {
+        Object.entries(winStatusForTwo).forEach(([key, value]) => {
+            if (key === (value + '')) {
+                winTally +=1
+            }
+        })
+    }
+    if (winTally === 3 && turn === 'playerOne') {
+        console.log('winTally is 3 for p1')
+        win = true
+        boardTwo.removeEventListener('click', handleShot, {once: true})
+        messageToPlayers(`${turn} wins!`)
+        return true
+    }
+    if (winTally === 3 && turn === 'playerTwo') {
+        console.log('winTally is 3 for p2')
+        win = true
+        boardOne.removeEventListener('click', handleShot, {once: true})
+        messageToPlayers(`${turn} wins!`)
+        return true
+    } else return false
 }
 
 const continueShooting = () => {
@@ -224,11 +331,7 @@ const switchPlayer = () => {
 }
 
 const switchBoardInPlay = () => {
-    if (turn === 'playerOne') {
-        playerOneShoots()
-    } else {
-        playerTwoShoots()
-    }
+    turn === 'playerOne'? playerOneShoots() : playerTwoShoots()
 }
 
 const playerOneShoots = () => {
@@ -245,16 +348,13 @@ const playerTwoShoots = () => {
     messageToPlayers(`${turn}\'s turn.`)
 }
 
-const disableBoard = () => {
+const disableBoard = (id) => {
     if (turn === 'playerOne') {
         boardOne.classList.add('notInPlay')
         boardTwo.classList.remove('notInPlay')
-        console.log('this happened.')
     } else {
         boardOne.classList.remove('notInPlay')
         boardTwo.classList.add('notInPlay')
-        console.log('this happened, too.')
-
     }
 }
 
@@ -264,4 +364,6 @@ const messageToPlayers = (string) => {
 
 boardOne.addEventListener('click',handleShot,{once: true})
 boardTwo.addEventListener('click',handleShot,{once: true})
-games.addEventListener('click',init)
+games.addEventListener('click',gameStatus)
+
+const sounds = new Audio()

@@ -139,7 +139,7 @@ switchPlayer()
 - code updateGrids
 - code updateMessages
 - code shootAtOpponent
-- code checkWiner
+- code checkWinner
 - code switchPlayer
 - code render
 5. Stretch Goals Phase 1
