@@ -11,28 +11,47 @@ let winTally
 
 const gameStatus = (event) => {
     let id = event.target.id
-    let elem = document.getElementById(`${id}`)
+    let newButton = document.getElementById('new')
+    let pauseButton = document.getElementById('pause')
+    let quitButton = document.getElementById('quit')
+    let resumeButton = document.getElementById(`resume`)
     switch (id) {
         case 'settings':
+            // changeSettings(newButton,pauseButton,quitButton)
             break
             // eventually put a function to change settings
-        case 'quit':
-            break
         case 'new':
             init()
             break
         case 'resume':
-        case 'pause':
-            pauseGame(elem, id)
+            resumeGame(resumeButton,quitButton)
             break
-            // eventually put a function to change settings
+        case 'pause':
+            pauseGame(pauseButton, id)
+            break
+        case 'quit':
+            quitGame(pauseButton,quitButton)
+            break
+        case 'quit-quit':
+            location.reload()
     }
 }
 
-const pauseGame = (elem, id) => {
+// const changeSettings = (secondButton,thirdButton,fourthButton) => {
+// }
+
+const quitGame = (pauseButton, quitButton) => {
     if (!turn) return
-    pauseBoards(elem)
-    if (id === "resume") resumeGame(elem)
+    messageToPlayers('Are you sure you want to quit?')
+    pauseBoards(pauseButton)
+    quitButton.innerText = 'Yes, quit game.'
+    quitButton.id = 'quit-quit'
+}
+
+const pauseGame = (pauseButton, id) => {
+    if (!turn) return
+    pauseBoards(pauseButton)
+    messageToPlayers(`Paused during ${turn}'s turn. Resume whenever you're ready.`)
 }
 
 const pauseBoards = (elem) => {
@@ -40,15 +59,19 @@ const pauseBoards = (elem) => {
     activeBoard.classList.add('notInPlay')
     elem.id = 'resume'
     elem.innerText = 'Resume Game'
-    messageToPlayers(`${turn}'s turn. Resume game when you're ready.`)
 }
 
-const resumeGame = (elem) => {
+const resumeGame = (elem,quitButton) => {
         let activeBoard = turn === 'playerOne'? boardTwo : boardOne
         activeBoard.classList.remove('notInPlay')
         elem.id = 'pause'
+        elem.innerText = 'Pause Game'
         messageToPlayers(`${turn}'s turn.`)
-}
+        if (!quitButton) {
+            elem.nextElementSibling.id = 'quit'
+            elem.nextElementSibling.innerText = 'Quit Game'
+        }
+    }
 
 const init = () => {
     turn = 'playerTwo'
@@ -190,6 +213,8 @@ const boatTrackerOne = document.querySelector('#trackerOne')
 const boatCellsOne = boatTrackerOne.querySelectorAll('.boatCell')
 const boatTrackerTwo = document.querySelector('#trackerTwo')
 const boatCellsTwo = boatTrackerTwo.querySelectorAll('.boatCell')
+const funnyExplosion = new Audio('../sounds/funny-explosion.mp3')
+const missShot = new Audio('../sounds/drop-1.wav')
 
 
 const handleShot = (event) => {
@@ -226,10 +251,12 @@ const checkIfHit = (event, r, c) => {
         event.target.innerText = '⛵️'
         boatType = boatsInPlay[r][c]
         boatsInPlay[r][c] *= 2
+        funnyExplosion.play()
         return true
     } else {
         event.target.innerText = '❌'
         boatsInPlay[r][c] = 11
+        missShot.play()
         return false
     }
 }
@@ -366,4 +393,3 @@ boardOne.addEventListener('click',handleShot,{once: true})
 boardTwo.addEventListener('click',handleShot,{once: true})
 games.addEventListener('click',gameStatus)
 
-const sounds = new Audio()
