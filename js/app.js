@@ -365,3 +365,5 @@ const messageToPlayers = (string) => {
 boardOne.addEventListener('click',handleShot,{once: true})
 boardTwo.addEventListener('click',handleShot,{once: true})
 games.addEventListener('click',gameStatus)
+
+const sounds = new Audio()
