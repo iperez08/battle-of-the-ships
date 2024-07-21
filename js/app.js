@@ -11,7 +11,6 @@ let winTally
 
 const gameStatus = (event) => {
     let id = event.target.id
-    let newButton = document.getElementById('new')
     let pauseButton = document.getElementById('pause')
     let quitButton = document.getElementById('quit')
     let resumeButton = document.getElementById(`resume`)
@@ -30,23 +29,30 @@ const gameStatus = (event) => {
             pauseGame(pauseButton, id)
             break
         case 'quit':
-            quitGame(pauseButton,quitButton)
+            checkQuitGame(pauseButton,quitButton)
             break
         case 'quit-quit':
-            location.reload()
+            byeSound.play()
+            setTimeout(quitGame,2000)
+            break
     }
 }
 
 // const changeSettings = (secondButton,thirdButton,fourthButton) => {
 // }
 
-const quitGame = (pauseButton, quitButton) => {
+const checkQuitGame = (pauseButton, quitButton) => {
     if (!turn) return
     messageToPlayers('Are you sure you want to quit?')
     pauseBoards(pauseButton)
     quitButton.innerText = 'Yes, quit game.'
     quitButton.id = 'quit-quit'
 }
+
+const quitGame = () => {
+    location.reload()
+}
+
 
 const pauseGame = (pauseButton, id) => {
     if (!turn) return
@@ -215,7 +221,7 @@ const boatTrackerTwo = document.querySelector('#trackerTwo')
 const boatCellsTwo = boatTrackerTwo.querySelectorAll('.boatCell')
 const funnyExplosion = new Audio('../sounds/funny-explosion.mp3')
 const missShot = new Audio('../sounds/drop-1.wav')
-
+const byeSound = new Audio('../sounds/bye.wav')
 
 const handleShot = (event) => {
     boatsInPlay = getOpponentData()
