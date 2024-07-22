@@ -16,9 +16,7 @@ const gameStatus = (event) => {
     let resumeButton = document.getElementById(`resume`)
     switch (id) {
         case 'settings':
-            // changeSettings(newButton,pauseButton,quitButton)
             break
-            // eventually put a function to change settings
         case 'new':
             init()
             break
@@ -37,9 +35,6 @@ const gameStatus = (event) => {
             break
     }
 }
-
-// const changeSettings = (secondButton,thirdButton,fourthButton) => {
-// }
 
 const checkQuitGame = (pauseButton, quitButton) => {
     if (!turn) return
