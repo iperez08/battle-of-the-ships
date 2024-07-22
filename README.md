@@ -6,7 +6,7 @@ This is a browser-based version of Battleship. This version, also known as Battl
 ![Battle of the Ships Landing Page](./animate/Game-Landing-Page.png)
 
 ## Getting Started
-Click [here](https://battle-of-the-ships.netlify.app/) to get started with the game!
+Click [here](https://version-2--battle-of-the-ships.netlify.app/) to get started with the game!
 
 Click [here](./PROPOSAL.md) to access the planning materials and proposal.
 
