@@ -72,7 +72,7 @@ const resumeGame = (elem,quitButton) => {
         activeBoard.classList.remove('notInPlay')
         elem.id = 'pause'
         elem.innerText = 'Pause Game'
-        messageToPlayers(`${turn}'s turn.`)
+        messageToPlayers(`${turn} attacks.`)
         if (!quitButton) {
             elem.nextElementSibling.id = 'quit'
             elem.nextElementSibling.innerText = 'Quit Game'
@@ -289,9 +289,7 @@ const updateBoatTracker = () => {
             if (key === (value + '')) {
                 boatCellsTwo.forEach((el) => {
                     if (el.id === (value + '')) {
-                        console.log(el)
                         el.classList.add('sunk')
-                        console.log(el)
                     }
                 })
             }
@@ -301,9 +299,7 @@ const updateBoatTracker = () => {
             if (key === (value + '')) {
                 boatCellsOne.forEach((el) => {
                     if (el.id === (value + '')) {
-                        console.log(el)
                         el.classList.add('sunk')
-                        console.log(el)
                     }
                 })
             }
@@ -327,14 +323,12 @@ const checkForWinner = () => {
         })
     }
     if (winTally === 3 && turn === 'playerOne') {
-        console.log('winTally is 3 for p1')
         win = true
         boardTwo.removeEventListener('click', handleShot, {once: true})
         messageToPlayers(`${turn} wins!`)
         return true
     }
     if (winTally === 3 && turn === 'playerTwo') {
-        console.log('winTally is 3 for p2')
         win = true
         boardOne.removeEventListener('click', handleShot, {once: true})
         messageToPlayers(`${turn} wins!`)
@@ -371,14 +365,14 @@ const playerOneShoots = () => {
     boardOne.removeEventListener('click',handleShot, {once: true})
     boardTwo.addEventListener('click', handleShot, {once: true})
     setTimeout(disableBoard,2000)
-    messageToPlayers(`${turn}\'s turn.`)
+    messageToPlayers(`${turn} attacks.`)
 }
 
 const playerTwoShoots = () => {
     boardOne.addEventListener('click', handleShot, {once: true})
     boardTwo.removeEventListener('click',handleShot, {once: true})
     setTimeout(disableBoard,2000)
-    messageToPlayers(`${turn}\'s turn.`)
+    messageToPlayers(`${turn} attacks.`)
 }
 
 const disableBoard = (id) => {
