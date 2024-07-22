@@ -257,11 +257,13 @@ const checkIfHit = (event, r, c) => {
         event.target.innerText = '⛵️'
         boatType = boatsInPlay[r][c]
         boatsInPlay[r][c] *= 2
+        funnyExplosion.playbackRate = 2
         funnyExplosion.play()
         return true
     } else {
         event.target.innerText = '❌'
         boatsInPlay[r][c] = 11
+        missShot.playbackRate = 0.5
         missShot.play()
         return false
     }
