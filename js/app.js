@@ -72,7 +72,7 @@ const resumeGame = (elem,quitButton) => {
         activeBoard.classList.remove('notInPlay')
         elem.id = 'pause'
         elem.innerText = 'Pause Game'
-        messageToPlayers(`${turn}'s turn.`)
+        messageToPlayers(`${turn} attacks.`)
         if (!quitButton) {
             elem.nextElementSibling.id = 'quit'
             elem.nextElementSibling.innerText = 'Quit Game'
@@ -365,14 +365,14 @@ const playerOneShoots = () => {
     boardOne.removeEventListener('click',handleShot, {once: true})
     boardTwo.addEventListener('click', handleShot, {once: true})
     setTimeout(disableBoard,2000)
-    messageToPlayers(`${turn}\'s turn.`)
+    messageToPlayers(`${turn} attacks.`)
 }
 
 const playerTwoShoots = () => {
     boardOne.addEventListener('click', handleShot, {once: true})
     boardTwo.removeEventListener('click',handleShot, {once: true})
     setTimeout(disableBoard,2000)
-    messageToPlayers(`${turn}\'s turn.`)
+    messageToPlayers(`${turn} attacks.`)
 }
 
 const disableBoard = (id) => {

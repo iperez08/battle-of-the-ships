@@ -31,7 +31,6 @@ section {
 
 .arena {
     display: flex;
-    background-color: aqua;
 }
 
 .boat_tracker {
