@@ -19,7 +19,8 @@ h1 {
     align-items: center;
 }
 
-nav, section {
+nav,
+section {
     display: flex;
     justify-content: center;
     grid-column: span 4;
@@ -69,7 +70,7 @@ section {
     width: 40px;
     display: flex;
     justify-content: center;
-    align-content:space-around;
+    align-content: space-around;
     font-size: 200%;
 }
 
@@ -93,7 +94,7 @@ menu {
     height: 400px;
 }
 
-menu > div {
+menu>div {
     display: flex;
     height: 100px;
     width: 200px;
@@ -107,7 +108,7 @@ menu > div {
     width: 85%;
 }
 
-div.gridcount > div {
+div.gridcount>div {
     border: solid 1px;
     height: 25px;
     width: 25px;

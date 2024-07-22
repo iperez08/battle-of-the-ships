@@ -21,17 +21,17 @@ const gameStatus = (event) => {
             init()
             break
         case 'resume':
-            resumeGame(resumeButton,quitButton)
+            resumeGame(resumeButton, quitButton)
             break
         case 'pause':
             pauseGame(pauseButton, id)
             break
         case 'quit':
-            checkQuitGame(pauseButton,quitButton)
+            checkQuitGame(pauseButton, quitButton)
             break
         case 'quit-quit':
             byeSound.play()
-            setTimeout(quitGame,2000)
+            setTimeout(quitGame, 2000)
             break
     }
 }
@@ -56,23 +56,23 @@ const pauseGame = (pauseButton, id) => {
 }
 
 const pauseBoards = (elem) => {
-    let activeBoard = turn === 'playerOne'? boardTwo : boardOne
+    let activeBoard = turn === 'playerOne' ? boardTwo : boardOne
     activeBoard.classList.add('notInPlay')
     elem.id = 'resume'
     elem.innerText = 'Resume Game'
 }
 
-const resumeGame = (elem,quitButton) => {
-        let activeBoard = turn === 'playerOne'? boardTwo : boardOne
-        activeBoard.classList.remove('notInPlay')
-        elem.id = 'pause'
-        elem.innerText = 'Pause Game'
-        messageToPlayers(`${turn} attacks.`)
-        if (!quitButton) {
-            elem.nextElementSibling.id = 'quit'
-            elem.nextElementSibling.innerText = 'Quit Game'
-        }
+const resumeGame = (elem, quitButton) => {
+    let activeBoard = turn === 'playerOne' ? boardTwo : boardOne
+    activeBoard.classList.remove('notInPlay')
+    elem.id = 'pause'
+    elem.innerText = 'Pause Game'
+    messageToPlayers(`${turn} attacks.`)
+    if (!quitButton) {
+        elem.nextElementSibling.id = 'quit'
+        elem.nextElementSibling.innerText = 'Quit Game'
     }
+}
 
 const init = () => {
     turn = 'playerTwo'
@@ -98,7 +98,7 @@ const init = () => {
 const clearTheBoard = () => {
     boardOneEls.forEach((el) => {
         el.innerText = ''
-    }) 
+    })
     boardTwoEls.forEach((el) => {
         el.innerText = ''
     })
@@ -109,11 +109,11 @@ const clearTheTrackers = () => {
         if (el.classList.contains('sunk')) {
             el.classList.remove('sunk')
         }
-    boatCellsTwo.forEach((el) => {
-        if (el.classList.contains('sunk')) {
-            el.classList.remove('sunk')
-        }
-    })
+        boatCellsTwo.forEach((el) => {
+            if (el.classList.contains('sunk')) {
+                el.classList.remove('sunk')
+            }
+        })
     })
 }
 
@@ -142,15 +142,15 @@ const placeBoat = (arr, boatSize) => {
     if (keepGoing === true && dir === "horizontal") {
         placeHorizontalBoat(arr, firstPoint, boatSize)
         return placeBoat(arr, boatSize - 1)
-    } else if(keepGoing === true && dir === 'vertical') {
+    } else if (keepGoing === true && dir === 'vertical') {
         placeVerticalBoat(arr, firstPoint, boatSize)
         return placeBoat(arr, boatSize - 1)
     } else
-        return placeBoat(arr,boatSize)
+        return placeBoat(arr, boatSize)
 }
 
 const randomInt = (highestValue) => {
-    return Math.floor(Math.random()*highestValue)
+    return Math.floor(Math.random() * highestValue)
 }
 
 const orientBoat = () => {
@@ -162,15 +162,15 @@ const orientBoat = () => {
     return orientation
 }
 
-const placeFirstBoatItem = (direction,leng) => {
+const placeFirstBoatItem = (direction, leng) => {
     if (direction === "horizontal") {
         let row = randomInt(10)
         let col = randomInt(10 - leng)
-        return [row,col]
+        return [row, col]
     } else {
         let row = randomInt(10 - leng)
         let col = randomInt(10)
-        return [row,col]
+        return [row, col]
     }
 }
 
@@ -201,7 +201,7 @@ const placeHorizontalBoat = (boatLoc, array, bLength) => {
     for (let i = 0; i < bLength; i++) {
         boatLoc[array[0]].splice(array[1] + i, 1, bLength)
     }
-} 
+}
 
 const boardOne = document.querySelector('#boardOne')
 const boardOneEls = boardOne.querySelectorAll('div.row > div')
@@ -244,7 +244,7 @@ const getOpponentData = () => {
     } else {
         return boatGridOne
     }
-}   
+}
 
 const checkIfHit = (event, r, c) => {
     if (boatsInPlay[r][c] >= 3 &&
@@ -267,13 +267,13 @@ const checkIfHit = (event, r, c) => {
 const updateWinStatus = (boatType) => {
     if (turn === 'playerOne') {
         Object.entries(winStatusForOne).forEach((pair) => {
-            if((boatType + '') === pair[0]) {
+            if ((boatType + '') === pair[0]) {
                 winStatusForOne[pair[0]] += 1
             }
         })
     } else {
         Object.entries(winStatusForTwo).forEach((pair) => {
-            if((boatType + '') === pair[0]) {
+            if ((boatType + '') === pair[0]) {
                 winStatusForTwo[pair[0]] += 1
             }
         })
@@ -309,25 +309,25 @@ const checkForWinner = () => {
     if (turn === 'playerOne') {
         Object.entries(winStatusForOne).forEach(([key, value]) => {
             if (key === (value + '')) {
-                winTally +=1
+                winTally += 1
             }
         })
     } else {
         Object.entries(winStatusForTwo).forEach(([key, value]) => {
             if (key === (value + '')) {
-                winTally +=1
+                winTally += 1
             }
         })
     }
     if (winTally === 3 && turn === 'playerOne') {
         win = true
-        boardTwo.removeEventListener('click', handleShot, {once: true})
+        boardTwo.removeEventListener('click', handleShot, { once: true })
         messageToPlayers(`${turn} wins!`)
         return true
     }
     if (winTally === 3 && turn === 'playerTwo') {
         win = true
-        boardOne.removeEventListener('click', handleShot, {once: true})
+        boardOne.removeEventListener('click', handleShot, { once: true })
         messageToPlayers(`${turn} wins!`)
         return true
     } else return false
@@ -355,20 +355,20 @@ const switchPlayer = () => {
 }
 
 const switchBoardInPlay = () => {
-    turn === 'playerOne'? playerOneShoots() : playerTwoShoots()
+    turn === 'playerOne' ? playerOneShoots() : playerTwoShoots()
 }
 
 const playerOneShoots = () => {
-    boardOne.removeEventListener('click',handleShot, {once: true})
-    boardTwo.addEventListener('click', handleShot, {once: true})
-    setTimeout(disableBoard,2000)
+    boardOne.removeEventListener('click', handleShot, { once: true })
+    boardTwo.addEventListener('click', handleShot, { once: true })
+    setTimeout(disableBoard, 2000)
     messageToPlayers(`${turn} attacks.`)
 }
 
 const playerTwoShoots = () => {
-    boardOne.addEventListener('click', handleShot, {once: true})
-    boardTwo.removeEventListener('click',handleShot, {once: true})
-    setTimeout(disableBoard,2000)
+    boardOne.addEventListener('click', handleShot, { once: true })
+    boardTwo.removeEventListener('click', handleShot, { once: true })
+    setTimeout(disableBoard, 2000)
     messageToPlayers(`${turn} attacks.`)
 }
 
@@ -386,7 +386,7 @@ const messageToPlayers = (string) => {
     message.innerText = string
 }
 
-boardOne.addEventListener('click',handleShot,{once: true})
-boardTwo.addEventListener('click',handleShot,{once: true})
-games.addEventListener('click',gameStatus)
+boardOne.addEventListener('click', handleShot, { once: true })
+boardTwo.addEventListener('click', handleShot, { once: true })
+games.addEventListener('click', gameStatus)
 

@@ -1,335 +1,338 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Battle of the Ships</title>
     <script defer src="js/app.js"></script>
     <link rel="stylesheet" href="css/style.css" />
 </head>
+
 <body>
-<h1>Battle of the Ships</h1>
-<nav id="action-buttons">
-    <button id='settings'>Settings</button>
-    <button id='new'>New Game</button>
-    <button id='pause'>Pause Game</p>
-    <button id='quit'>Quit Game</p>
-</nav>
-<section> How to Play:<br>
-    1. Each player has three boats to defend and three boats to attack. The<br>
-    boats vary in length from 3 to 5 cells.<br>
-    2. Each player attacks the opposite 10x10 grid by clicking on an empty cell.<br>
-    3. A successful attack displays a boat (⛵️) emoji, while an unsuccessful <br>
-    attack displays a red x (❌) emoji. <br>
-    4. The boat tracker displays a filled-in black bar once a boat has been sunk. <br>
-    5. The first player to sink all three opponent's ships wins!</section>
-<div id="arenaOne" class="arena">
-    <menu class="boat_tracker" id="trackerOne">
-        <p>Player 1 Boats</p>
-        <div class='large'>
-            <img src="./animate/ship.jpg" alt="large boat five cells long">
-            <div class='gridcount'>
-                <div class="boatCell" id="5"></div>
-                <div class="boatCell" id="5"></div>
-                <div class="boatCell" id="5"></div>
-                <div class="boatCell" id="5"></div>
-                <div class="boatCell" id="5"></div>
+    <h1>Battle of the Ships</h1>
+    <nav id="action-buttons">
+        <button id='settings'>Settings</button>
+        <button id='new'>New Game</button>
+        <button id='pause'>Pause Game</p>
+            <button id='quit'>Quit Game</p>
+    </nav>
+    <section> How to Play:<br>
+        1. Each player has three boats to defend and three boats to attack. The<br>
+        boats vary in length from 3 to 5 cells.<br>
+        2. Each player attacks the opposite 10x10 grid by clicking on an empty cell.<br>
+        3. A successful attack displays a boat (⛵️) emoji, while an unsuccessful <br>
+        attack displays a red x (❌) emoji. <br>
+        4. The boat tracker displays a filled-in black bar once a boat has been sunk. <br>
+        5. The first player to sink all three opponent's ships wins!</section>
+    <div id="arenaOne" class="arena">
+        <menu class="boat_tracker" id="trackerOne">
+            <p>Player 1 Boats</p>
+            <div class='large'>
+                <img src="./animate/ship.jpg" alt="large boat five cells long">
+                <div class='gridcount'>
+                    <div class="boatCell" id="5"></div>
+                    <div class="boatCell" id="5"></div>
+                    <div class="boatCell" id="5"></div>
+                    <div class="boatCell" id="5"></div>
+                    <div class="boatCell" id="5"></div>
+                </div>
             </div>
-        </div>
-        <div class='medium'>
-            <img src="./animate/ship.jpg" alt="large boat four cells long">
-            <div class='gridcount'>
-                <div class="boatCell" id="4"></div>
-                <div class="boatCell" id="4"></div>
-                <div class="boatCell" id="4"></div>
-                <div class="boatCell" id="4"></div>
+            <div class='medium'>
+                <img src="./animate/ship.jpg" alt="large boat four cells long">
+                <div class='gridcount'>
+                    <div class="boatCell" id="4"></div>
+                    <div class="boatCell" id="4"></div>
+                    <div class="boatCell" id="4"></div>
+                    <div class="boatCell" id="4"></div>
+                </div>
             </div>
-        </div>
-        <div class='small'>
-            <img src="./animate/ship.jpg" alt="large boat three cells long">
-            <div class='gridcount'>
-                <div class="boatCell" id="3"></div>
-                <div class="boatCell" id="3"></div>
-                <div class="boatCell" id="3"></div>
+            <div class='small'>
+                <img src="./animate/ship.jpg" alt="large boat three cells long">
+                <div class='gridcount'>
+                    <div class="boatCell" id="3"></div>
+                    <div class="boatCell" id="3"></div>
+                    <div class="boatCell" id="3"></div>
+                </div>
             </div>
-        </div>
-    </menu>
-    <div id="boardOne" class="board">
-        <div class='row' id='0'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
-        </div>
-        <div class='row' id='1'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
-        </div>
-        <div class='row' id='2'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
-        </div>
-        <div class='row' id='3'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
-        </div>
-        <div class='row' id='4'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
-        </div>
-        <div class='row' id='5'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
-        </div>
-        <div class='row' id='6'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
-        </div>
-        <div class='row' id='7'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
-        </div>
-        <div class='row' id='8'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
-        </div>
-        <div class='row' id='9'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
+        </menu>
+        <div id="boardOne" class="board">
+            <div class='row' id='0'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
+            <div class='row' id='1'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
+            <div class='row' id='2'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
+            <div class='row' id='3'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
+            <div class='row' id='4'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
+            <div class='row' id='5'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
+            <div class='row' id='6'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
+            <div class='row' id='7'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
+            <div class='row' id='8'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
+            <div class='row' id='9'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
         </div>
     </div>
-</div>
-<div id="arenaTwo" class="arena">
-    <div id="boardTwo" class="board">
-        <div class='row' id='0'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
+    <div id="arenaTwo" class="arena">
+        <div id="boardTwo" class="board">
+            <div class='row' id='0'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
+            <div class='row' id='1'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
+            <div class='row' id='2'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
+            <div class='row' id='3'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
+            <div class='row' id='4'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
+            <div class='row' id='5'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
+            <div class='row' id='6'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
+            <div class='row' id='7'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
+            <div class='row' id='8'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
+            <div class='row' id='9'>
+                <div class="column" id='0'></div>
+                <div class="column" id='1'></div>
+                <div class="column" id='2'></div>
+                <div class="column" id='3'></div>
+                <div class="column" id='4'></div>
+                <div class="column" id='5'></div>
+                <div class="column" id='6'></div>
+                <div class="column" id='7'></div>
+                <div class="column" id='8'></div>
+                <div class="column" id='9'></div>
+            </div>
         </div>
-        <div class='row' id='1'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
-        </div>
-        <div class='row' id='2'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
-        </div>
-        <div class='row' id='3'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
-        </div>
-        <div class='row' id='4'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
-        </div>
-        <div class='row' id='5'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
-        </div>
-        <div class='row' id='6'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
-        </div>
-        <div class='row' id='7'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
-        </div>
-        <div class='row' id='8'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
-        </div>
-        <div class='row' id='9'>
-            <div class="column" id='0'></div>
-            <div class="column" id='1'></div>
-            <div class="column" id='2'></div>
-            <div class="column" id='3'></div>
-            <div class="column" id='4'></div>
-            <div class="column" id='5'></div>
-            <div class="column" id='6'></div>
-            <div class="column" id='7'></div>
-            <div class="column" id='8'></div>
-            <div class="column" id='9'></div>
-        </div>
+        <menu class="boat_tracker" id="trackerTwo">
+            <p>Player 2 Boats</p>
+            <div class='large'>
+                <img src="./animate/ship.jpg" alt="large boat five cells long">
+                <div class='gridcount'>
+                    <div class="boatCell" id="5"></div>
+                    <div class="boatCell" id="5"></div>
+                    <div class="boatCell" id="5"></div>
+                    <div class="boatCell" id="5"></div>
+                    <div class="boatCell" id="5"></div>
+                </div>
+            </div>
+            <div class='medium'>
+                <img src="./animate/ship.jpg" alt="large boat four cells long">
+                <div class='gridcount'>
+                    <div class="boatCell" id="4"></div>
+                    <div class="boatCell" id="4"></div>
+                    <div class="boatCell" id="4"></div>
+                    <div class="boatCell" id="4"></div>
+                </div>
+            </div>
+            <div class='small'>
+                <img src="./animate/ship.jpg" alt="large boat three cells long">
+                <div class='gridcount'>
+                    <div class="boatCell" id="3"></div>
+                    <div class="boatCell" id="3"></div>
+                    <div class="boatCell" id="3"></div>
+                </div>
+            </div>
+        </menu>
     </div>
-    <menu class="boat_tracker" id="trackerTwo">
-        <p>Player 2 Boats</p>
-        <div class='large'>
-            <img src="./animate/ship.jpg" alt="large boat five cells long">
-            <div class='gridcount'>
-                <div class="boatCell" id="5"></div>
-                <div class="boatCell" id="5"></div>
-                <div class="boatCell" id="5"></div>
-                <div class="boatCell" id="5"></div>
-                <div class="boatCell" id="5"></div>
-            </div>
-        </div>
-        <div class='medium'>
-            <img src="./animate/ship.jpg" alt="large boat four cells long">
-            <div class='gridcount'>
-                <div class="boatCell" id="4"></div>
-                <div class="boatCell" id="4"></div>
-                <div class="boatCell" id="4"></div>
-                <div class="boatCell" id="4"></div>
-            </div>
-        </div>
-        <div class='small'>
-            <img src="./animate/ship.jpg" alt="large boat three cells long">
-            <div class='gridcount'>
-                <div class="boatCell" id="3"></div>
-                <div class="boatCell" id="3"></div>
-                <div class="boatCell" id="3"></div>
-            </div>
-        </div>
-    </menu>
-</div>
 </body>
+
 </html>
